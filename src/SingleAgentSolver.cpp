@@ -22,7 +22,7 @@ void SingleAgentSolver::compute_heuristics() {
         // g-val)
   };
 
-  my_heuristic.resize(env.map.size(), MAX_TIMESTEP);
+  my_heuristic.resize(env->map.size(), MAX_TIMESTEP);
 
   // generate a heap that can save nodes (and an open_handle)
   boost::heap::pairing_heap<Node, boost::heap::compare<Node::compare_node> > heap;

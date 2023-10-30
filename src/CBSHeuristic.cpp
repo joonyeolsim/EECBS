@@ -1187,11 +1187,11 @@ int CBSHeuristic::DPForWMVC(std::vector<int>& x, int i, int sum, const std::vect
                         return 0;
                 cplex.setParam(IloCplex::TiLim, time_limit - runtime);
                 cplex.extract(model);
-                cplex.setOut(env.getNullStream());
+                cplex.setOut(env->getNullStream());
                 int rst=0;
                 if (cplex.solve())
                         rst = (int)cplex.getObjValue();
-                env.end();
+                env->end();
                 return rst;
 }*/
 
@@ -1226,7 +1226,7 @@ node_weights)
         cplex.setParam(IloCplex::TiLim, time_limit - runtime); // time limit = 300 sec
         int solution_cost = -1;
         cplex.extract(model);
-        cplex.setOut(env.getNullStream());
+        cplex.setOut(env->getNullStream());
         int rst = 0;
         if (cplex.solve())
                 rst = (int)cplex.getObjValue();
@@ -1235,7 +1235,7 @@ node_weights)
                 std::cout << "ERROR" << endl;
                 cplex.exportModel("error.lp");
         }
-        env.end();
+        env->end();
         return rst;
 }*/
 
