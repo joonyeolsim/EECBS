@@ -20,7 +20,7 @@ shared_ptr<Conflict> RectangleReasoning::findRectangleConflictByGR(const vector<
   int loc = paths[a1]->at(timestep).location;
   if (from1 == from2 ||                                               // same direction
       from1 == loc || from2 == loc ||                                 // wait actions
-      abs(from1 - from2) == 2 || abs(from1 - from2) == env.cols * 2)  // opposite direction
+      abs(from1 - from2) == 2 || abs(from1 - from2) == env->cols * 2)  // opposite direction
     return nullptr;
 
   list<Constraint> B1;
@@ -209,7 +209,7 @@ bool RectangleReasoning::ExtractBarriers(const MDD& mdd, int loc, int timestep, 
       if (0 <= barrier_id && barrier_id < num_barrier && !block[barrier_id] &&
           barrier_time == n->level) {
         if (n->children.size() == 1 && extent_L[barrier_id] == MAX_TIMESTEP &&
-            abs(dir1) * abs(n->location - n->children.front()->location) == env.cols)
+            abs(dir1) * abs(n->location - n->children.front()->location) == env->cols)
           ;  // the only child node is on the same barrier
         else {
           extent_L[barrier_id] = min(extent_L[barrier_id], n->level);
@@ -261,9 +261,9 @@ bool RectangleReasoning::isEntryBarrier(const Constraint& b1, const Constraint& 
   pair<int, int> b2_l = Utils::getCoordinate(get<1>(b2), env);
   pair<int, int> b2_u = Utils::getCoordinate(get<2>(b2), env);
 
-  if (dir1 == env.cols && b1_u.first >= b2_l.first && b2_l.first >= b1_l.first)
+  if (dir1 == env->cols && b1_u.first >= b2_l.first && b2_l.first >= b1_l.first)
     return true;
-  else if (dir1 == -env.cols && b1_u.first <= b2_l.first && b2_l.first <= b1_l.first)
+  else if (dir1 == -env->cols && b1_u.first <= b2_l.first && b2_l.first <= b1_l.first)
     return true;
   else if (dir1 == 1 && b1_u.second >= b2_l.second && b2_l.second >= b1_l.second)
     return true;
@@ -279,9 +279,9 @@ bool RectangleReasoning::isExitBarrier(const Constraint& b1, const Constraint& b
   pair<int, int> b2_l = Utils::getCoordinate(get<1>(b2), env);
   pair<int, int> b2_u = Utils::getCoordinate(get<2>(b2), env);
 
-  if (dir1 == env.cols && b2_u.first <= b1_l.first)
+  if (dir1 == env->cols && b2_u.first <= b1_l.first)
     return true;
-  else if (dir1 == -env.cols && b2_u.first >= b1_l.first)
+  else if (dir1 == -env->cols && b2_u.first >= b1_l.first)
     return true;
   else if (dir1 == 1 && b2_u.second <= b1_l.second)
     return true;

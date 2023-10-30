@@ -55,7 +55,7 @@ class SpaceTimeAStar : public SingleAgentSolver {
 
   string getName() const { return "AStar"; }
 
-  SpaceTimeAStar(const Environment& env, int agent) : SingleAgentSolver(env, agent) {}
+  SpaceTimeAStar(const Environment* env, int agent) : SingleAgentSolver(env, agent) {}
 
  private:
   // define typedefs and handles for heap

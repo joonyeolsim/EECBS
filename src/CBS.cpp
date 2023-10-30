@@ -1268,19 +1268,19 @@ CBS::CBS(vector<SingleAgentSolver*>& search_engines,
   mutex_helper.search_engines = search_engines;
 }
 
-CBS::CBS(const Environment& env, bool sipp, int screen)
+CBS::CBS(const Environment* env, bool sipp, int screen)
     : screen(screen),
       suboptimality(1),
-      num_of_agents(env.num_of_agents),
+      num_of_agents(env->num_of_agents),
       mdd_helper(initial_constraints, search_engines),
       rectangle_helper(env),
       mutex_helper(env, initial_constraints),
       corridor_helper(search_engines, initial_constraints),
-      heuristic_helper(env.num_of_agents, paths, search_engines,
+      heuristic_helper(env->num_of_agents, paths, search_engines,
                        initial_constraints, mdd_helper) {
   clock_t t = clock();
   initial_constraints.resize(num_of_agents,
-                             ConstraintTable(env.cols, env.map.size()));
+                             ConstraintTable(env->cols, env->map.size()));
 
   search_engines.resize(num_of_agents);
   for (int i = 0; i < num_of_agents; i++) {

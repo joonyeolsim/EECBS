@@ -129,7 +129,7 @@ int main(int argc, char** argv) {
   ///////////////////////////////////////////////////////////////////////////
   // load the instance
 //  Instance instance(vm["map"].as<string>(), vm["agents"].as<string>(), vm["agentNum"].as<int>());
-  Environment env;
+  Environment* env = new Environment();
   srand(0);
   int runs = 1 + vm["restart"].as<int>();
   //////////////////////////////////////////////////////////////////////

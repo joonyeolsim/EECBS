@@ -102,7 +102,7 @@ class SingleAgentSolver {
   {
     return max(get_DH_heuristic(from, to), Utils::getManhattanDistance(from, to, env));
   }
-  const Environment& env;
+  const Environment* env;
 
   virtual Path findOptimalPath(const HLNode& node, const ConstraintTable& initial_constraints,
                                const vector<Path*>& paths, int agent, int lower_bound) = 0;
@@ -120,10 +120,10 @@ class SingleAgentSolver {
   // int getStartLocation() const {return instance.start_locations[agent]; }
   // int getGoalLocation() const {return instance.goal_locations[agent]; }
 
-  SingleAgentSolver(const Environment& env, int agent)
+  SingleAgentSolver(const Environment* env, int agent)
       : env(env),  // agent(agent),
-        start_location(env.curr_states[agent].location),
-        goal_location(env.goal_locations[agent][0].first) {
+        start_location(env->curr_states[agent].location),
+        goal_location(env->goal_locations[agent][0].first) {
     compute_heuristics();
   }
 
