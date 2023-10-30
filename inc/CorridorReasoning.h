@@ -25,10 +25,10 @@ class CorridorReasoning {
                                             const vector<Path*>& paths, const HLNode& node);
   int findCorridor(const shared_ptr<Conflict>& conflict, const vector<Path*>& paths,
                    int endpoints[], int endpoints_time[]);  // return the length of the corridor
-  int getEnteringTime(const std::vector<PathEntry>& path, const std::vector<PathEntry>& path2,
+  int getEnteringTime(const Path& path, const Path& path2,
                       int t);
-  int getExitingTime(const std::vector<PathEntry>& path, int t);
-  int getCorridorLength(const std::vector<PathEntry>& path, int t_start, int loc_end,
+  int getExitingTime(const Path& path, int t);
+  int getCorridorLength(const Path& path, int t_start, int loc_end,
                         std::pair<int, int>& edge);
 
   // int getBypassLength(int start, int end, std::pair<int, int> blocked, const bool* my_map, int

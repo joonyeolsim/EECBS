@@ -304,7 +304,7 @@ pair<int, int> RectangleReasoning::getIntersection(const Constraint& b1, const C
     return make_pair(b2_l.first, b1_l.second);
 }
 
-bool RectangleReasoning::blockedNodes(const vector<PathEntry>& path, const pair<int, int>& Rs,
+bool RectangleReasoning::blockedNodes(const Path& path, const pair<int, int>& Rs,
                                       const pair<int, int>& Rg, int Rg_t, int dir) {
   pair<int, int> b_l;
   if (abs(dir) == 1) {
@@ -357,8 +357,8 @@ bool RectangleReasoning::isCut(const Constraint& b, const pair<int, int>& Rs,
     return false;
 }
 
-void RectangleReasoning::generalizedRectangle(const vector<PathEntry>& path1,
-                                              const vector<PathEntry>& path2, const MDD& mdd1,
+void RectangleReasoning::generalizedRectangle(const Path& path1,
+                                              const Path& path2, const MDD& mdd1,
                                               const MDD& mdd2, const list<Constraint>& B1,
                                               const list<Constraint>& B2, int timestep,
                                               int& best_type, pair<int, int>& best_Rs,

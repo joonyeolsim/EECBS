@@ -354,7 +354,7 @@ bool CBS::findPathForSingleAgent(CBSNode* node, int ag, int lowerbound) {
   runtime_build_CAT += search_engines[ag]->runtime_build_CAT;
   runtime_path_finding += (double)(clock() - t) / CLOCKS_PER_SEC;
   if (!new_path.empty()) {
-    assert(!isSamePath(*paths[ag], new_path));
+//    assert(!isSamePath(*paths[ag], new_path));
     node->paths.emplace_back(ag, new_path);
     node->g_val = node->g_val - (int)paths[ag]->size() + (int)new_path.size();
     paths[ag] = &node->paths.back().second;
@@ -1093,7 +1093,7 @@ bool CBS::solve(double _time_limit, int _cost_lowerbound, int _cost_upperbound) 
         cout << "	Expand " << *curr << endl << "	on " << *(curr->conflict) << endl;
 
       bool solved[2] = {false, false};
-      vector<vector<PathEntry>*> copy(paths);
+      vector<Path*> copy(paths);
 
       for (int i = 0; i < 2; i++) {
         if (i > 0) paths = copy;

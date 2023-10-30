@@ -650,7 +650,7 @@ bool CBSHeuristic::buildWeightedDependencyGraph(ECBSNode& node, const vector<int
 // return optimal f - root g and #HL nodes
 pair<int, int> CBSHeuristic::solve2Agents(int a1, int a2, const CBSNode& node, bool cardinal) {
   vector<SingleAgentSolver*> engines{search_engines[a1], search_engines[a2]};
-  vector<vector<PathEntry>> initial_paths{*paths[a1], *paths[a2]};
+  vector<Path> initial_paths{*paths[a1], *paths[a2]};
   vector<ConstraintTable> constraints{ConstraintTable(initial_constraints[a1]),
                                       ConstraintTable(initial_constraints[a2])};
   constraints[0].insert2CT(node, a1);
@@ -699,7 +699,7 @@ pair<int, int> CBSHeuristic::solve2Agents(int a1, int a2, const CBSNode& node, b
 // return optimal f and a1_shortestpath * #agents + a2_shortestpath
 tuple<int, int, int> CBSHeuristic::solve2Agents(int a1, int a2, const ECBSNode& node) {
   vector<SingleAgentSolver*> engines{search_engines[a1], search_engines[a2]};
-  vector<vector<PathEntry>> initial_paths;
+  vector<Path> initial_paths;
   vector<ConstraintTable> constraints{ConstraintTable(initial_constraints[a1]),
                                       ConstraintTable(initial_constraints[a2])};
   constraints[0].insert2CT(node, a1);

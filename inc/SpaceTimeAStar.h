@@ -69,7 +69,7 @@ class SpaceTimeAStar : public SingleAgentSolver {
   hashtable_t allNodes_table;
 
   // Updates the path datamember
-  void updatePath(const LLNode* goal, vector<PathEntry>& path);
+  void updatePath(const LLNode* goal, Path& path);
   void updateFocalList();
   inline AStarNode* popNode();
   inline void pushNode(AStarNode* node);

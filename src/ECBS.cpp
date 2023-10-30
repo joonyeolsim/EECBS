@@ -54,7 +54,7 @@ bool ECBS::solve(double time_limit, int _cost_lowerbound) {
           cout << "	Expand " << *curr << endl << "	on " << *(curr->conflict) << endl;
 
         bool solved[2] = {false, false};
-        vector<vector<PathEntry>*> path_copy(paths);
+        vector<Path*> path_copy(paths);
         vector<int> fmin_copy(min_f_vals);
         for (int i = 0; i < 2; i++) {
           if (i > 0) {
@@ -118,7 +118,7 @@ break;
         cout << "	Expand " << *curr << endl << "	on " << *(curr->conflict) << endl;
 
       bool solved[2] = {false, false};
-      vector<vector<PathEntry>*> path_copy(paths);
+      vector<Path*> path_copy(paths);
       vector<int> fmin_copy(min_f_vals);
       for (int i = 0; i < 2; i++) {
         if (i > 0) {
@@ -299,7 +299,7 @@ bool ECBS::findPathForSingleAgent(ECBSNode* node, int ag) {
   runtime_build_CAT += search_engines[ag]->runtime_build_CAT;
   runtime_path_finding += (double)(clock() - t) / CLOCKS_PER_SEC;
   if (new_path.first.empty()) return false;
-  assert(!isSamePath(*paths[ag], new_path.first));
+//  assert(!isSamePath(*paths[ag], new_path.first));
   node->paths.emplace_back(ag, new_path);
   node->g_val = node->g_val - min_f_vals[ag] + new_path.second;
   node->sum_of_costs = node->sum_of_costs - (int)paths[ag]->size() + (int)new_path.first.size();

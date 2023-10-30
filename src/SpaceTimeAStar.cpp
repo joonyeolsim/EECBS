@@ -1,6 +1,6 @@
 #include "SpaceTimeAStar.h"
 
-void SpaceTimeAStar::updatePath(const LLNode* goal, vector<PathEntry>& path) {
+void SpaceTimeAStar::updatePath(const LLNode* goal, Path& path) {
   const LLNode* curr = goal;
   if (curr->is_goal) curr = curr->parent;
   path.reserve(curr->g_val + 1);

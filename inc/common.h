@@ -43,21 +43,21 @@ using std::vector;
 #define MAX_COST INT_MAX / 2
 #define MAX_NODES INT_MAX / 2
 
-struct PathEntry {
-  int location = -1;
-  // bool single = false;
-  // int mdd_width;
+//struct PathEntry {
+//  int location = -1;
+//  // bool single = false;
+//  // int mdd_width;
+//
+//  // bool is_single() const {
+//  //  return mdd_width == 1;
+//  //}
+//  PathEntry(int loc = -1) { location = loc; }
+//};
 
-  // bool is_single() const {
-  //  return mdd_width == 1;
-  //}
-  PathEntry(int loc = -1) { location = loc; }
-};
+//typedef vector<PathEntry> Path;
+//std::ostream& operator<<(std::ostream& os, const Path& path);
 
-typedef vector<PathEntry> Path;
-std::ostream& operator<<(std::ostream& os, const Path& path);
-
-bool isSamePath(const Path& p1, const Path& p2);
+//bool isSamePath(const Path& p1, const Path& p2);
 
 // Only for three-tuples of std::hash-able types for simplicity.
 // You can of course template this struct to allow other hash functions

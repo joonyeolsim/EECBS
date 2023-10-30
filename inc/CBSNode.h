@@ -1,6 +1,7 @@
 #pragma once
 #include "Conflict.h"
 #include "common.h"
+#include "States.h"
 
 enum node_selection {
   NODE_RANDOM,

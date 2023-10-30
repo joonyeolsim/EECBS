@@ -151,7 +151,7 @@ shared_ptr<Conflict> CorridorReasoning::findCorridorConflict(const shared_ptr<Co
   return nullptr;
 }
 
-int CorridorReasoning::getExitingTime(const std::vector<PathEntry>& path, int t) {
+int CorridorReasoning::getExitingTime(const Path& path, int t) {
   if (t >= (int)path.size()) t = (int)path.size() - 1;
   int loc = path[t].location;
   while (loc != path.back().location && search_engines[0]->instance.getDegree(loc) == 2) {
@@ -161,8 +161,8 @@ int CorridorReasoning::getExitingTime(const std::vector<PathEntry>& path, int t)
   return t;
 }
 
-int CorridorReasoning::getEnteringTime(const vector<PathEntry>& path,
-                                       const vector<PathEntry>& path2, int t) {
+int CorridorReasoning::getEnteringTime(const Path& path,
+                                       const Path& path2, int t) {
   if (t >= (int)path.size()) t = (int)path.size() - 1;
   int loc = path[t].location;
   while (loc != path.front().location && loc != path2.back().location &&
@@ -173,7 +173,7 @@ int CorridorReasoning::getEnteringTime(const vector<PathEntry>& path,
   return t;
 }
 
-int CorridorReasoning::getCorridorLength(const vector<PathEntry>& path, int t_start, int loc_end,
+int CorridorReasoning::getCorridorLength(const Path& path, int t_start, int loc_end,
                                          pair<int, int>& edge) {
   int curr = path[t_start].location;
   int next;

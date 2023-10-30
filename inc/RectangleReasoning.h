@@ -25,11 +25,11 @@ class RectangleReasoning {
   bool isEntryBarrier(const Constraint& b1, const Constraint& b2, int dir1);
   bool isExitBarrier(const Constraint& b1, const Constraint& b2, int dir1);
   pair<int, int> getIntersection(const Constraint& b1, const Constraint& b2);
-  bool blockedNodes(const vector<PathEntry>& path, const pair<int, int>& Rs,
+  bool blockedNodes(const Path& path, const pair<int, int>& Rs,
                     const pair<int, int>& Rg, int Rg_t, int dir);
   bool isCut(const Constraint& b, const pair<int, int>& Rs, const pair<int, int>& Rg);
 
-  void generalizedRectangle(const vector<PathEntry>& path1, const vector<PathEntry>& path2,
+  void generalizedRectangle(const Path& path1, const Path& path2,
                             const MDD& mdd1, const MDD& mdd2, const list<Constraint>& B1,
                             const list<Constraint>& B2, int timestep, int& best_type,
                             pair<int, int>& best_Rs, pair<int, int>& best_Rg);
