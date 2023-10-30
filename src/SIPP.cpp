@@ -74,7 +74,7 @@ Path SIPP::findPath(const ConstraintTable& constraint_table) {
     }
 
     for (int next_location :
-         instance.getNeighbors(curr->location))  // move to neighboring locations
+         Utils::getNeighbors(curr->location, env))  // move to neighboring locations
     {
       for (auto& i : reservation_table.get_safe_intervals(
                curr->location, next_location, curr->timestep + 1, curr->high_expansion + 1)) {
@@ -189,7 +189,7 @@ pair<Path, int> SIPP::findSuboptimalPath(const HLNode& node,
     }
 
     for (int next_location :
-         instance.getNeighbors(curr->location))  // move to neighboring locations
+         Utils::getNeighbors(curr->location, env))  // move to neighboring locations
     {
       for (auto& i : reservation_table.get_safe_intervals(
                curr->location, next_location, curr->timestep + 1, curr->high_expansion + 1)) {
@@ -317,7 +317,7 @@ int SIPP::getTravelTime(int start, int end, const ConstraintTable& constraint_ta
       length = curr->g_val;
       break;
     }
-    list<int> next_locations = instance.getNeighbors(curr->location);
+    list<int> next_locations = Utils::getNeighbors(curr->location, env);
     next_locations.emplace_back(curr->location);
     for (int next_location : next_locations) {
       int next_timestep = curr->timestep + 1;

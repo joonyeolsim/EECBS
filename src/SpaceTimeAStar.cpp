@@ -77,7 +77,7 @@ pair<Path, int> SpaceTimeAStar::findSuboptimalPath(const HLNode& node,
 
     if (curr->timestep >= constraint_table.length_max) continue;
 
-    auto next_locations = instance.getNeighbors(curr->location);
+    auto next_locations = Utils::getNeighbors(curr->location, env);
     next_locations.emplace_back(curr->location);
     for (int next_location : next_locations) {
       int next_timestep = curr->timestep + 1;
@@ -179,7 +179,7 @@ int SpaceTimeAStar::getTravelTime(int start, int end, const ConstraintTable& con
       length = curr->g_val;
       break;
     }
-    list<int> next_locations = instance.getNeighbors(curr->location);
+    list<int> next_locations = Utils::getNeighbors(curr->location, env);
     next_locations.emplace_back(curr->location);
     for (int next_location : next_locations) {
       int next_timestep = curr->timestep + 1;
