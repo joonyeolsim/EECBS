@@ -4,7 +4,7 @@
 
 class ECBS : public CBS {
  public:
-  ECBS(const Instance& instance, bool sipp, int screen) : CBS(instance, sipp, screen) {}
+  ECBS(const Environment& env, bool sipp, int screen) : CBS(env, sipp, screen) {}
 
   // ECBSNode* dummy_start = nullptr;
   // ECBSNode* goal_node = nullptr;

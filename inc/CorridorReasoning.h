@@ -1,5 +1,5 @@
 #pragma once
-#include "Instance.h"
+#include "Environment.h"
 #include "ReservationTable.h"
 #include "SingleAgentSolver.h"
 

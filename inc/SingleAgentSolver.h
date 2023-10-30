@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "ConstraintTable.h"
-#include "Instance.h"
+#include "Environment.h"
+#include "Utils.h"
 
 class LLNode  // low-level node
 {
@@ -99,9 +100,9 @@ class SingleAgentSolver {
   int compute_heuristic(int from,
                         int to) const  // compute admissible heuristic between two locations
   {
-    return max(get_DH_heuristic(from, to), instance.getManhattanDistance(from, to));
+    return max(get_DH_heuristic(from, to), Utils::getManhattanDistance(from, to, env));
   }
-  const Instance& instance;
+  const Environment& env;
 
   virtual Path findOptimalPath(const HLNode& node, const ConstraintTable& initial_constraints,
                                const vector<Path*>& paths, int agent, int lower_bound) = 0;
@@ -114,15 +115,15 @@ class SingleAgentSolver {
   virtual string getName() const = 0;
 
   list<int> getNextLocations(int curr) const;  // including itself and its neighbors
-  list<int> getNeighbors(int curr) const { return instance.getNeighbors(curr); }
+  list<int> getNeighbors(int curr) const { return Utils::getNeighbors(curr, env); }
 
   // int getStartLocation() const {return instance.start_locations[agent]; }
   // int getGoalLocation() const {return instance.goal_locations[agent]; }
 
-  SingleAgentSolver(const Instance& instance, int agent)
-      : instance(instance),  // agent(agent),
-        start_location(instance.start_locations[agent]),
-        goal_location(instance.goal_locations[agent]) {
+  SingleAgentSolver(const Environment& env, int agent)
+      : env(env),  // agent(agent),
+        start_location(env.curr_states[agent].location),
+        goal_location(env.goal_locations[agent][0].first) {
     compute_heuristics();
   }
 

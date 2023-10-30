@@ -980,8 +980,8 @@ void CBS::savePaths(const string& fileName) const {
   for (int i = 0; i < num_of_agents; i++) {
     output << "Agent " << i << ": ";
     for (const auto& t : *paths[i])
-      output << "(" << search_engines[0]->instance.getRowCoordinate(t.location) << ","
-             << search_engines[0]->instance.getColCoordinate(t.location) << ")->";
+      output << "(" << Utils::getRowCoordinate(t.location, search_engines[0]->env) << ","
+             << Utils::getColCoordinate(t.location, search_engines[0]->env) << ")->";
     output << endl;
   }
   output.close();
@@ -1259,8 +1259,8 @@ CBS::CBS(vector<SingleAgentSolver*>& search_engines,
       paths_found_initially(paths_found_initially),
       search_engines(search_engines),
       mdd_helper(initial_constraints, search_engines),
-      rectangle_helper(search_engines[0]->instance),
-      mutex_helper(search_engines[0]->instance, initial_constraints),
+      rectangle_helper(search_engines[0]->env),
+      mutex_helper(search_engines[0]->env, initial_constraints),
       corridor_helper(search_engines, initial_constraints),
       heuristic_helper(search_engines.size(), paths, search_engines, initial_constraints,
                        mdd_helper) {
@@ -1268,26 +1268,26 @@ CBS::CBS(vector<SingleAgentSolver*>& search_engines,
   mutex_helper.search_engines = search_engines;
 }
 
-CBS::CBS(const Instance& instance, bool sipp, int screen)
+CBS::CBS(const Environment& env, bool sipp, int screen)
     : screen(screen),
       suboptimality(1),
-      num_of_agents(instance.getDefaultNumberOfAgents()),
+      num_of_agents(env.num_of_agents),
       mdd_helper(initial_constraints, search_engines),
-      rectangle_helper(instance),
-      mutex_helper(instance, initial_constraints),
+      rectangle_helper(env),
+      mutex_helper(env, initial_constraints),
       corridor_helper(search_engines, initial_constraints),
-      heuristic_helper(instance.getDefaultNumberOfAgents(), paths, search_engines,
+      heuristic_helper(env.num_of_agents, paths, search_engines,
                        initial_constraints, mdd_helper) {
   clock_t t = clock();
   initial_constraints.resize(num_of_agents,
-                             ConstraintTable(instance.num_of_cols, instance.map_size));
+                             ConstraintTable(env.cols, env.map.size()));
 
   search_engines.resize(num_of_agents);
   for (int i = 0; i < num_of_agents; i++) {
     if (sipp)
-      search_engines[i] = new SIPP(instance, i);
+      search_engines[i] = new SIPP(env, i);
     else
-      search_engines[i] = new SpaceTimeAStar(instance, i);
+      search_engines[i] = new SpaceTimeAStar(env, i);
   }
   runtime_preprocessing = (double)(clock() - t) / CLOCKS_PER_SEC;
 
@@ -1295,7 +1295,7 @@ CBS::CBS(const Instance& instance, bool sipp, int screen)
 
   if (screen >= 2)  // print start and goals
   {
-    instance.printAgents();
+//    instance.printAgents();
   }
 }
 

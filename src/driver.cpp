@@ -128,14 +128,14 @@ int main(int argc, char** argv) {
 
   ///////////////////////////////////////////////////////////////////////////
   // load the instance
-  Instance instance(vm["map"].as<string>(), vm["agents"].as<string>(), vm["agentNum"].as<int>());
-
+//  Instance instance(vm["map"].as<string>(), vm["agents"].as<string>(), vm["agentNum"].as<int>());
+  Environment env;
   srand(0);
   int runs = 1 + vm["restart"].as<int>();
   //////////////////////////////////////////////////////////////////////
   // initialize the solver
   if (vm["lowLevelSolver"].as<bool>()) {
-    ECBS ecbs(instance, vm["sipp"].as<bool>(), vm["screen"].as<int>());
+    ECBS ecbs(env, vm["sipp"].as<bool>(), vm["screen"].as<int>());
     ecbs.setPrioritizeConflicts(vm["prioritizingConflicts"].as<bool>());
     ecbs.setDisjointSplitting(vm["disjointSplitting"].as<bool>());
     ecbs.setBypass(vm["bypass"].as<bool>());
@@ -172,7 +172,7 @@ int main(int argc, char** argv) {
       ecbs.saveStats(vm["output"].as<string>(), vm["agents"].as<string>());
     ecbs.clearSearchEngines();
   } else {
-    CBS cbs(instance, vm["sipp"].as<bool>(), vm["screen"].as<int>());
+    CBS cbs(env, vm["sipp"].as<bool>(), vm["screen"].as<int>());
     cbs.setPrioritizeConflicts(vm["prioritizingConflicts"].as<bool>());
     cbs.setDisjointSplitting(vm["disjointSplitting"].as<bool>());
     cbs.setBypass(vm["bypass"].as<bool>());

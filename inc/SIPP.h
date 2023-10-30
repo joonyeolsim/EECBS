@@ -77,7 +77,7 @@ class SIPP : public SingleAgentSolver {
 
   string getName() const { return "SIPP"; }
 
-  SIPP(const Instance& instance, int agent) : SingleAgentSolver(instance, agent) {}
+  SIPP(const Environment& env, int agent) : SingleAgentSolver(env, agent) {}
 
  private:
   // define typedefs and handles for heap

@@ -2,7 +2,7 @@
 
 list<int> SingleAgentSolver::getNextLocations(int curr) const  // including itself and its neighbors
 {
-  list<int> rst = instance.getNeighbors(curr);
+  list<int> rst = Utils::getNeighbors(curr, env);
   rst.emplace_back(curr);
   return rst;
 }
@@ -22,7 +22,7 @@ void SingleAgentSolver::compute_heuristics() {
         // g-val)
   };
 
-  my_heuristic.resize(instance.map_size, MAX_TIMESTEP);
+  my_heuristic.resize(env.map.size(), MAX_TIMESTEP);
 
   // generate a heap that can save nodes (and an open_handle)
   boost::heap::pairing_heap<Node, boost::heap::compare<Node::compare_node> > heap;
@@ -33,7 +33,7 @@ void SingleAgentSolver::compute_heuristics() {
   while (!heap.empty()) {
     Node curr = heap.top();
     heap.pop();
-    for (int next_location : instance.getNeighbors(curr.location)) {
+    for (int next_location : Utils::getNeighbors(curr.location, env)) {
       if (my_heuristic[next_location] > curr.value + 1) {
         my_heuristic[next_location] = curr.value + 1;
         Node next(next_location, curr.value + 1);

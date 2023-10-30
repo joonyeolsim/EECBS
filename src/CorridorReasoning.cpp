@@ -26,12 +26,12 @@ int CorridorReasoning::findCorridor(const shared_ptr<Conflict>& conflict,
   if (t < 1) return 0;
   if (loc1 < 0)  // vertex conflict
   {
-    if (search_engines[0]->instance.getDegree(loc2) != 2) return 0;  // not a corridor
+    if (Utils::getDegree(loc2, search_engines[0]->env) != 2) return 0;  // not a corridor
     loc1 = loc2;
   } else  // edge conflict
   {
-    if (search_engines[0]->instance.getDegree(loc1) != 2 &&
-        search_engines[0]->instance.getDegree(loc2) != 2)
+    if (Utils::getDegree(loc1, search_engines[0]->env) != 2 &&
+        Utils::getDegree(loc2, search_engines[0]->env) != 2)
       return 0;  // not a corridor
   }
 
@@ -54,7 +54,7 @@ int CorridorReasoning::findCorridor(const shared_ptr<Conflict>& conflict,
   int corridor_length = 1;
   while (curr != endpoints[1]) {
     if (curr == loc2) traverseTheConflictingLocation = true;
-    auto neighbors = search_engines[0]->instance.getNeighbors(curr);
+    auto neighbors = Utils::getNeighbors(curr, search_engines[0]->env);
     if (neighbors.size() == 2)  // inside the corridor
     {
       if (neighbors.front() == prev) {
@@ -75,10 +75,10 @@ int CorridorReasoning::findCorridor(const shared_ptr<Conflict>& conflict,
   if (!traverseTheConflictingLocation) return 0;
   // When k=2, it might just be a corner cell, which we do not want to recognize as a corridor
   if (corridor_length == 2 &&
-      search_engines[0]->instance.getColCoordinate(endpoints[0]) !=
-          search_engines[0]->instance.getColCoordinate(endpoints[1]) &&
-      search_engines[0]->instance.getRowCoordinate(endpoints[0]) !=
-          search_engines[0]->instance.getRowCoordinate(endpoints[1])) {
+      Utils::getColCoordinate(endpoints[0], search_engines[0]->env) !=
+          Utils::getColCoordinate(endpoints[1], search_engines[0]->env) &&
+      Utils::getRowCoordinate(endpoints[0], search_engines[0]->env) !=
+          Utils::getRowCoordinate(endpoints[1], search_engines[0]->env)) {
     return 0;
   }
   return corridor_length;
@@ -92,10 +92,10 @@ shared_ptr<Conflict> CorridorReasoning::findCorridorConflict(const shared_ptr<Co
   constraint_type type;
   tie(agent, loc1, loc2, timestep, type) = conflict->constraint1.back();
   int curr = -1;
-  if (search_engines[0]->instance.getDegree(loc1) == 2) {
+  if (Utils::getDegree(loc1, search_engines[0]->env) == 2) {
     curr = loc1;
     if (loc2 >= 0) timestep--;
-  } else if (loc2 >= 0 && search_engines[0]->instance.getDegree(loc2) == 2)
+  } else if (loc2 >= 0 && Utils::getDegree(loc2, search_engines[0]->env) == 2)
     curr = loc2;
   if (curr <= 0) return nullptr;
 
@@ -154,19 +154,18 @@ shared_ptr<Conflict> CorridorReasoning::findCorridorConflict(const shared_ptr<Co
 int CorridorReasoning::getExitingTime(const Path& path, int t) {
   if (t >= (int)path.size()) t = (int)path.size() - 1;
   int loc = path[t].location;
-  while (loc != path.back().location && search_engines[0]->instance.getDegree(loc) == 2) {
+  while (loc != path.back().location && Utils::getDegree(loc, search_engines[0]->env) == 2) {
     t++;
     loc = path[t].location;
   }
   return t;
 }
 
-int CorridorReasoning::getEnteringTime(const Path& path,
-                                       const Path& path2, int t) {
+int CorridorReasoning::getEnteringTime(const Path& path, const Path& path2, int t) {
   if (t >= (int)path.size()) t = (int)path.size() - 1;
   int loc = path[t].location;
   while (loc != path.front().location && loc != path2.back().location &&
-         search_engines[0]->instance.getDegree(loc) == 2) {
+         Utils::getDegree(loc, search_engines[0]->env) == 2) {
     t--;
     loc = path[t].location;
   }
