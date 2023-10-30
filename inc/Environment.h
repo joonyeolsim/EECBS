@@ -2,13 +2,13 @@
 // Created by joonyeol on 23. 10. 30.
 //
 
-#ifndef EECBS_ENV_H
-#define EECBS_ENV_H
+#ifndef EECBS_ENVIRONMENT_H
+#define EECBS_ENVIRONMENT_H
 
 #include <States.h>
 #include <common.h>
 
-class Env {
+class Environment {
  public:
   int num_of_agents = 20;
   int rows = 32;
@@ -54,4 +54,4 @@ class Env {
   };
 };
 
-#endif  // EECBS_ENV_H
+#endif  // EECBS_ENVIRONMENT_H
